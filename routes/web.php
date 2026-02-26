@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MasterController;
 use App\Http\Controllers\QrController;
+use App\Http\Controllers\QrScannerController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::redirect('/', 'home');
+Route::redirect('/', 'login');
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::get('/redirectto', [LoginController::class, 'redirectto'])->name('redirectto');
@@ -29,7 +30,8 @@ Route::get('/registration', [RegisterController::class, 'register'])->name('logi
 Route::post('/registration', [RegisterController::class, 'registerUser'])->name('registration.registerUser');
 Route::post('/registration/search', [RegisterController::class, 'search_identification'])->name('registration.search');
 
-
+Route::get('/qr/scanner', [QrScannerController::class, 'index'])->name('qr.scanner');
+Route::post('/qr/scan', [QrScannerController::class, 'scan_qr'])->name('qr.scan');
 
 
 Route::middleware(['auth', 'role:0,1'])->group(function () {

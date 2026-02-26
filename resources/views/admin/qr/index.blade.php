@@ -39,24 +39,36 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <span>
                     @foreach($qrLists as $qrlist)
                     <tr>
                         <td>{{ $qrlist->id }}</td>
                         <td>{{ $qrlist->name }}</td>
                         <td>{{ $qrlist->identification }}</td>
                         <td>{{ $qrlist->type->description}}</td>
-                        <td>
-                            {!! QrCode::size(200)->generate($qrlist->qr->qr_code) !!}
+                        <td id="app_qr">
+                            <a href="#" class="qr-popup" data-toggle="modal" data-target="#viewQRModal"
+                                data-large-qr='{!! QrCode::size(500)->generate($qrlist->qr->qr_code) !!}'>
+                                {!! QrCode::size(200)->generate($qrlist->qr->qr_code) !!}
+                            </a>
                         </td>
-                        <td>{!! $qrlist->user && $qrlist->user->email ? $qrlist->user->email : '<span class="badge badge-success">Available</span>'!!}</td>
+                        <td>
+                            {!! $qrlist->user && $qrlist->user->email ? $qrlist->user->email : '<span class="badge badge-success">Available</span>'!!}</td>
                         <td>
                             <form action="{{ route('user.userUpdate', $qrlist->id) }}" method="POST" style="display:inline;">
                                 @csrf
-                                <button class="btn btn-sm btn-primary">View</button>
+                                @if($qrlist->lock == 0)
+                                    <button class="btn btn-sm btn-primary">Lock</button>
+                                @else
+                                    <button class="btn btn-sm btn-danger">Unlocked</button>
+                                @endif
                             </form>
                         </td>
                     </tr>
                     @endforeach
+                     @include('admin.qr.view-qr')
+                    </span>
+
                 </tbody>
             </table>
             <!-- Laravel pagination links -->
@@ -66,7 +78,7 @@
         </div>
          
     </div>
-
+    
 @endsection
 @section('css')
  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -100,8 +112,19 @@
     });
 </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-
+    
 <!-- DataTables JS -->
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const modalQr = document.getElementById('modal-qr');
+    document.querySelectorAll('.qr-popup').forEach(link => {
+        link.addEventListener('click', function () {
+            modalQr.innerHTML = this.dataset.largeQr;
+        });
+    });
+});
+</script>
 @endsection

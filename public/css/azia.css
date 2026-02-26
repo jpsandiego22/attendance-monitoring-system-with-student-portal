@@ -37493,3 +37493,8 @@ body {
         margin-left: 0 !important;
     }
 }
+.qr-container svg {
+    width: 100%;       /* make it take full width of container */
+    height: auto;      /* maintain aspect ratio */
+    max-width: 500px;  /* optional max width */
+}
