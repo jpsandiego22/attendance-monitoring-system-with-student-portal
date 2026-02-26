@@ -46,6 +46,7 @@ Route::middleware(['auth', 'role:2'])->group(function () {
 });
 Route::middleware(['auth', 'role:0,1,2'])->group(function () {
    Route::post('/upload/photo', [MasterController::class, 'upload_photo'])->name('upload.photo');
+   Route::post('/change/password', [MasterController::class, 'change_password'])->name('change.password');
 });
 
 

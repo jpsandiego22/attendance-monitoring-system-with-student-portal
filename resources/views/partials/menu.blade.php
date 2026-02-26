@@ -65,22 +65,12 @@
         <div id="app_img" class="az-header-profile">
             <div class="az-img-user position-relative d-inline-block">
                 <img src="{{ asset(optional(Auth::user()->detail)->img ?? 'img/faces/face0.jpg') }}" class="img-fluid" alt="User Image">
-                {{-- @if(Auth::user()->detail->img == null)
-                    <img src="{{ asset('img/faces/face0.jpg') }}" class="img-fluid" alt="">
-                @else
-                    <img src="{{ asset('Auth::user()->detail->img') }}" class="img-fluid" alt="">
-                @endif --}}
-
-               
-
             </div>
             <h6>{{  strtoupper(explode(' ', Auth::user()->detail->name)[0]); }}</h6>
             <span>{{ Auth::user()->type->description }}</span>
             <form @submit.prevent="img_upload" enctype="multipart/form-data">
                 @csrf
-
                 <input type="file" ref="file" name="img" hidden @change="handleFile">
-
                 <button type="button"
                     class="btn btn-outline-dark btn-sm rounded-circle"
                     @click="$refs.file.click()">
@@ -90,9 +80,10 @@
            
         </div><!-- az-header-profile -->
 
-        <a data-toggle="modal" data-target="#staticBackdrop" class="dropdown-item"><i class="typcn typcn-user-outline"></i> My Profile</a>
+        <a href="#" data-toggle="modal" data-target="#myProfileModal" class="dropdown-item"><i class="typcn typcn-user-outline"></i> My Profile</a>
+        <a href="#" data-toggle="modal" data-target="#changePasswordModal" class="dropdown-item"><i class="typcn typcn-cog-outline"></i> Account Settings</a>
         <form method="POST" action="{{ route('logout') }}">
-            @csrf
+            @csrf 
             <button type="submit" class="dropdown-item"><i class="typcn typcn-power-outline"></i> Sign Out</button>
         </form>
         

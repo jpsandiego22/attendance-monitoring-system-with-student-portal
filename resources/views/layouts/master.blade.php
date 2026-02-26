@@ -11,8 +11,6 @@
     <link href="{{ asset('lib/ionicons/css/ionicons.min.css') }}" rel="stylesheet">
     <link href="{{ asset('lib/typicons.font/typicons.css') }}" rel="stylesheet">
     <link href="{{ asset('lib/flag-icon-css/css/flag-icon.min.css') }}" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- Azia CSS -->
     
 
@@ -28,6 +26,8 @@
     {{-- CONTENT --}}
     <div  class="az-content-dashboard">
         @include('partials.profile')
+        @include('partials.change-password')
+        
         <div class="container">
             <div class="az-content-body">
                 <div class="az-dashboard-one-title ">
@@ -45,7 +45,13 @@
 
     {{-- FOOTER --}}
     @include('partials.footer')
-
+    <script>  
+        let imgUrl = '{{ route("upload.photo") }}';
+        let chngePass = '{{ route("change.password") }}';
+    </script>
+    <script src="{{ asset('js/vue2.js') }}"></script>
+    <script src="{{ asset('js/axios.min.js') }}"></script>
+    <script src="{{ asset('js/master.js') }}"></script>
     <!-- Vendor JS -->
     <script src="{{ asset('lib/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -58,42 +64,9 @@
     
     <script src="{{ asset('js/chart.flot.sampledata.js') }}"></script>
     <script src="{{ asset('js/dashboard.sampledata.js') }}"></script>
-    <script>
-        new Vue({
-            el: '#app_img',
-            data: {
-                img: null,
-            },
-            methods: {
-                 handleFile(event) {
-                    this.img = event.target.files[0];
-                    this.img_upload(); // auto upload after select
-                },
-
-                img_upload() {
-                    let formData = new FormData();
-                    formData.append('img', this.img);
-
-                    axios.post('{{ route("upload.photo") }}', formData, {
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
-                        }
-                    })
-                    .then(response => {
-                        console.log(response.data);
-                        if (response.data.status === 'success') {
-                            location.reload();
-                        }
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
-                },
-            }
-        });
-        </script>
+    
     @yield('js')
     <script src="{{ asset('js/azia.js') }}"></script>
-   
+    
 </body>
 </html>

@@ -1,4 +1,4 @@
-<div class="modal fade mt-5" id="staticBackdrop" tabindex="-1" aria-hidden="true">
+<div class="modal fade mt-5" id="myProfileModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-body">
@@ -48,9 +48,6 @@
                         {!! QrCode::size(200)->generate(Auth::user()->detail->qr->qr_code) !!}
                      </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success font-weight-bold">SAVE CHANGES</button>
             </div>
         </div>
     </div>
