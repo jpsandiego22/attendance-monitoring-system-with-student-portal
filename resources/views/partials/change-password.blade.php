@@ -3,7 +3,7 @@
         <div id="app_pass" class="modal-content">
             <form @submit.prevent="chngePassword">
                 <div class="modal-body">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button @click="clearForm" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <div class="row">
                         <div class="col-md-12">
                             <h5 class="modal-title">CHANGE PASSWORD</h5>
@@ -11,9 +11,16 @@
                         </div>
                         
                         <div class="col-md-12">
-                             <div v-if="message.length" v-html="message" :class="['alert', 'alert-' + alertClass, 'alert-dismissible', 'fade', 'show']"role="alert">
-                                <button type="button"  @click="message = ''" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span>&times;</span>
+                            <div v-if="message"
+                                v-html="message"
+                                :class="['alert', 'alert-' + alertClass]"
+                                class="alert alert-dismissible fade show"
+                                role="alert">
+
+                                <button type="button"
+                                        @click="message = ''"
+                                        class="close" aria-label="Close">
+                                    <span>&times;</span>fdsfdsfds
                                 </button>
                             </div>
                             <div class="form-group">

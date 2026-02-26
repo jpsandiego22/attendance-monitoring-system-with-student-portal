@@ -51,6 +51,14 @@
                         </button>
                 </div>
                 <hr>
+                <div class="mt-5" v-if="message.length">
+                    <div v-if="message.length" class="alert alert-danger alert-dismissible fade show" role="alert">
+                        @{{ message }}
+                        <button type="button"  @click="message = ''" class="close" data-dismiss="alert" aria-label="Close">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                </div>
                 <form @submit.prevent="registerUser">
                     @csrf
                     <div class="form-group">
@@ -71,15 +79,7 @@
                 </form>
             </div>
           
-            <div class="mt-5" v-else>
-                
-                <div v-if="message.length" class="alert alert-danger alert-dismissible fade show" role="alert">
-                    @{{ message }}
-                     <button type="button"  @click="message = ''" class="close" data-dismiss="alert" aria-label="Close">
-                        <span>&times;</span>
-                    </button>
-                </div>
-            </div>
+            
             
         </div>
         

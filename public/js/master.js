@@ -37,9 +37,16 @@ new Vue({
         vnew: null,
         vconfirm: null,
         message: '',
-        alertClass: null,
+        alertClass: '',
     },
     methods: {
+        clearForm() {
+            this.message = '';
+            this.vold = '';
+            this.vnew = '';
+            this.vconfirm = '';
+            this.alertClass = '';
+        },
         chngePassword() {
            console.log(chngePass)
             axios.post(chngePass,{ old: this.vold,
