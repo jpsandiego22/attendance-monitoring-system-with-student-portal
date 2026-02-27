@@ -20,6 +20,7 @@
 
     <!-- Azia CSS -->
     <link rel="stylesheet" href="{{ asset('css/azia.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/master.css') }}">
 </head>
 
 <body class="az-body">
@@ -36,18 +37,21 @@
               @csrf
                 @include('partials.message')
                 <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" name="email" class="form-control" placeholder="Enter your email" value="{{ old('email') }}" required>
+                   
+                    <input type="email" name="email" class="form-control" placeholder=" " value="{{ old('email') }}" required>
+                 <label>Email</label>
                 </div>
 
                 <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
+                   
+                    <input type="password" name="password" class="form-control" placeholder=" " required>
+                 <label>Password</label>
                 </div>
 
                 <button type="submit" class="btn btn-az-primary btn-block">
                     Sign In
                 </button>
+
                 
                
                

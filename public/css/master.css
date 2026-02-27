@@ -1,0 +1,81 @@
+ .dark {
+    background: #111;
+    color: white;
+}
+
+.light {
+    background: white;
+    color: #222;
+}
+
+.clock-container {
+    text-align: center;
+    position: relative;
+        
+}
+
+.clock {
+    font-size: 70px;
+    padding: 20px 50px;
+    /* border-radius: 15px; */
+    letter-spacing: 3px;
+    /* margin-bottom: 20px; */
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+.dark .clock {
+    background: #222;
+        width: 100% !important;
+}
+
+.light .clock {
+    background: white;
+        width: 100% !important;
+}
+
+.btn-button {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: xx-small;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+      .form-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.form-control {
+    padding: 1rem 0.75rem 0.25rem 0.75rem; /* top padding extra for label */
+    font-size: 16px;
+}
+
+label {
+    position: absolute;
+    top: 50%;
+    left: 0.75rem;
+    transform: translateY(-50%);
+    color: #6c757d; /* default label color */
+    pointer-events: none;
+    transition: 0.2s ease all;
+    background: #fff; /* match input background */
+    padding: 0 0.2em;
+}
+
+/* Floating effect */
+.form-control:focus ~ label,
+.form-control:not(:placeholder-shown) ~ label {
+    transform: translateY(-110%) scale(0.8);
+    color: #2196f3;
+    background: #fff;
+    padding: 0.2em;
+    padding-left:0px
+}
+.scroll-history {
+    max-height: 200px;   /* Adjust height */
+    overflow-y: auto;    /* Enable vertical scrolling */
+}

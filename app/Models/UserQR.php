@@ -39,4 +39,13 @@ class UserQR extends Authenticatable
     {
         return $this->belongsTo(UserDetail::class, 'user_detail_id');
     }
+    public function scopeSearchQrCode($query, $keyword)
+    {
+       
+        if ($keyword) {
+            return $query->where('qr_code',$keyword);
+        }
+        return $query->whereRaw('0 = 1');
+       
+    }
 }
