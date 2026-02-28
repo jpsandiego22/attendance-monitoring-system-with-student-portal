@@ -12,7 +12,7 @@
     <link href="{{ asset('lib/typicons.font/typicons.css') }}" rel="stylesheet">
     <link href="{{ asset('lib/flag-icon-css/css/flag-icon.min.css') }}" rel="stylesheet">
     <!-- Azia CSS -->
-    
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
     @yield('css')
     <link rel="stylesheet" href="{{ asset('css/azia.css') }}">
@@ -56,14 +56,6 @@
     <script src="{{ asset('lib/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('lib/ionicons/ionicons.js') }}"></script>
-    <script src="{{ asset('lib/jquery.flot/jquery.flot.js') }}"></script>
-    <script src="{{ asset('lib/jquery.flot/jquery.flot.resize.js') }}"></script>
-    <script src="{{ asset('lib/chart.js/Chart.bundle.min.js') }}"></script>
-    <script src="{{ asset('lib/peity/jquery.peity.min.js') }}"></script>
-
-    
-    <script src="{{ asset('js/chart.flot.sampledata.js') }}"></script>
-    <script src="{{ asset('js/dashboard.sampledata.js') }}"></script>
     
     @yield('js')
     <script src="{{ asset('js/azia.js') }}"></script>

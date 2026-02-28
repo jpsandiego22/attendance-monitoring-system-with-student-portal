@@ -11,12 +11,17 @@
         <li class="nav-item {{ Route::is('user.*') ? 'active show' : '' }}">
             <a href="#" class="nav-link with-sub"><i class="typcn typcn-group"></i>Users </a>
             <nav class="az-menu-sub">
-            <a href="{{route('user.register')}}" class="nav-link">Register</a>
+            <a href="{{route('user.register')}}" class="nav-link">Create</a>
             <a href="{{route('user.listview')}}" class="nav-link">List</a>
+            <a href="{{route('user.listview')}}" class="nav-link text-primary">Import *.CSV Template</a>
             </nav>
         </li>
         <li class="nav-item {{ Route::is('admin.qr') ? 'active show' : '' }}">
-            <a href="{{route('admin.qr')}}" class="nav-link"><i class="typcn typcn-tag"></i> QR</a>
+            <a href="#" class="nav-link with-sub"><i class="typcn typcn-group"></i>QR </a>
+            <nav class="az-menu-sub">
+            <a href="{{route('qr.scanner')}}" class="nav-link">Qr Scanner</a>
+            <a href="{{route('admin.qr')}}" class="nav-link">List</a>
+            </nav>
         </li>
         <li class="nav-item">
             <a href="form-elements.html" class="nav-link"><i class="typcn typcn-download-outline"></i> Logs</a>

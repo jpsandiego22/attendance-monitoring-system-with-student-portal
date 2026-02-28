@@ -53,14 +53,21 @@ class LoginController extends Controller
     }
     protected function login(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
-            'password' => 'required|string'
+            'password' => [
+                'required',
+                'string',
+                'regex:/\S+/' // ensures at least one non-space character
+            ],
         ]);
+
 
         if ($validator->fails()) 
         {
-            $responses = $this->helper->handler('error','danger',$validator);
+            $errors = $validator->errors()->all(); // array of error messages
+            $responses = $this->helper->handler('error','danger',implode('<br>', $errors));
             return back()->with($responses);
         }
 

@@ -98,8 +98,8 @@ class RegisterController extends Controller
         $user = $request->input('data');
 
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email|string|max:100|unique:user_account,email',
-            'password' => 'required|string|max:100',
+            'email' => 'required|email:rfc,dns|string|max:100|unique:user_account,email',
+            'password' => 'required|string|max:100|min:6',
         ]);
 
         if ($validator->fails()) 

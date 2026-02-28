@@ -63,9 +63,10 @@
                 <p>
                     <hr>
                 </p>
-                <button type="submit" class="btn btn-primary  btn-block">
+                    @php $data = ['auth_type' => 'login']; @endphp
+                    <a href="{{ route('login.google.redirect',$data) }}" class="btn btn-primary  btn-block">
                     <i class="fab fa-google float-left bg-white text-primary p-1"></i> Sign In Using Google
-                </button>
+                    </a>
             </div>
             
             
@@ -84,6 +85,9 @@
     </div>
 </div>
 
+  <link href="{{ asset('lib/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('lib/ionicons/css/ionicons.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('lib/typicons.font/typicons.css') }}" rel="stylesheet">
 <!-- Vendor JS -->
 <script src="{{ asset('lib/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

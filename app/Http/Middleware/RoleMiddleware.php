@@ -22,7 +22,12 @@ class RoleMiddleware
         }
 
         if (!in_array(auth()->user()->user_type, $roles)) {
-            abort(403, 'Unauthorized');
+         $responses = [
+            'code' => '403',
+            'message' => 'Unauthorized'
+        ];
+
+        return redirect()->route('error')->with($responses);
         }
 
         return $next($request);

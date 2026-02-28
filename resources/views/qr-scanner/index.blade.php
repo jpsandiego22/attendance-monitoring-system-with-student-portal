@@ -22,14 +22,20 @@
     <!-- Azia CSS -->
     <link rel="stylesheet" href="{{ asset('css/master.css') }}">
     <link rel="stylesheet" href="{{ asset('css/azia.css') }}">
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
 </head>
+
 
 <body class="az-body">
 
-    <div id="appAll" class="container mt-5">
+    <div id="appAll" class="container mt-5" v-cloak>
         <div class="row">
             <div class="col-md-12 text-center">
-            <h1>ATTENDANCE MONITORING SYSTEM</h1>
+                <h1>ATTENDANCE MONITORING SYSTEM</h1>
             </div>
         </div>
         <div class="row">

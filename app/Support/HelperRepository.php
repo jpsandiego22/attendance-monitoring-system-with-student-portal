@@ -34,5 +34,14 @@ class HelperRepository
     {
         Auth::logout(); // Destroy the user session
     }
+    public function error_page($status, $class, $message)
+    {
+         return $responses = [
+            'status'=> $status,
+            'class'=> $class,
+            'message' => $message];
+
+        return view('error',$responses);
+    }
     
 }
