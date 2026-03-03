@@ -19,23 +19,14 @@ class UserDetail extends Authenticatable
     
     protected $table = 'user_details';
     protected $fillable = [
-        'img', 'identification', 'name', 'year', 'section', 'user_type','lock'
+        'img', 'identification', 'name', 'year', 'section','contact', 'user_type','lock'
     ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
+   
     protected $hidden = [
-         'user_type',
+         'user_type'
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
+   
     public function user()
     {
         return $this->hasOne(User::class, 'user_detail_id');

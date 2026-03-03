@@ -24,6 +24,7 @@ class UserDetailSeeder extends Seeder
             'img'=>null,
             'identification' => '0000',
             'name' => 'ADMINISTRATOR',
+            'contact' => '+639301111111',
             'year' => null,
             'section' => null,
             'user_type' => 0,

@@ -18,6 +18,7 @@ class CreateUserDetailsTable extends Migration
             $table->string('img')->nullable();
             $table->string('identification')->unique();
             $table->string('name');
+            $table->string('contact', 13);
             $table->string('year')->nullable();
             $table->string('section')->nullable();
             $table->timestamps();

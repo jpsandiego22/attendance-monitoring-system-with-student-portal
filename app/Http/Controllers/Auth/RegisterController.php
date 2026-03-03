@@ -95,7 +95,7 @@ class RegisterController extends Controller
     }
     public function registerUser(Request $request)
     {
-        $user = $request->input('data');
+        $user = $request->input('users');
 
         $validator = Validator::make($request->all(), [
             'email' => 'required|email:rfc,dns|string|max:100|unique:user_account,email',

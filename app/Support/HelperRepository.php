@@ -18,10 +18,17 @@ class HelperRepository
     }
     public function page($page_title, $page_sub)
     {
+        $UserTypeId = Auth::user()->user_type;
+        $userType  = UserType::query();
+        if($UserTypeId !=0)
+        {
+            $userType = $userType->whereNotIn('type', [0, 1]);
+        }
+
         return $page = [
                 'page_title' => Str::upper($page_title),
                 'page_sub' => $page_sub,
-                'user_types'=> UserType::all(['type','description'])
+                'user_types'=> $userType->get(['id','type','description'])
             ];
 
     }
@@ -43,5 +50,14 @@ class HelperRepository
 
         return view('error',$responses);
     }
-    
+    public function loginAccess($status, $class, $message)
+    {
+         return $responses = [
+            'status'=> $status,
+            'class'=> $class,
+            'message' => $message];
+
+        return view('error',$responses);
+    }
+   
 }

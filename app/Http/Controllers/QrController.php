@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\UserDetail;
 use App\Support\HelperRepository;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 
 class QrController extends Controller
 {
@@ -29,10 +29,25 @@ class QrController extends Controller
 
         $page['perPage'] = $perPage;
             // Use paginate() directly on the query, no ->get()
-                $page['qrLists'] = UserDetail::with('type')
-                    ->with('user')
-                    ->with('qr')
-                    ->paginate($perPage); // <-- here
+
+        $userType = Auth::user()->user_type;
+        $userSection = Auth::user()->detail->section;
+        $userYear= Auth::user()->detail->year;
+
+        $userDetail = $userType === 0 
+            ? UserDetail::with('type')
+            ->with('user')
+            ->with('qr')
+            ->paginate($perPage) 
+            : UserDetail::with('type')
+            ->whereNotIn('user_type',[0,1])
+            ->where('section',$userSection)
+            ->where('year',$userYear)
+            ->with('user')
+            ->with('qr')
+            ->paginate($perPage); 
+
+        $page['qrLists'] = $userDetail;
 
         return view('admin.qr.index', $page);
     }

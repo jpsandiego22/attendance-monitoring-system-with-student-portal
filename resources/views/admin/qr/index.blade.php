@@ -27,7 +27,7 @@
                 </div>
             </form>
             <table id="qr-table" style="width:100%" class="table table-striped table-bordered table-responsive table-hover w-100">
-                <thead>
+                <thead class="thead-dark text-center">
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
@@ -47,10 +47,12 @@
                         <td>{{ $qrlist->identification }}</td>
                         <td>{{ $qrlist->type->description}}</td>
                         <td id="app_qr">
+                            @if($qrlist->qr->qr_code)
                             <a href="#" class="qr-popup" data-toggle="modal" data-target="#viewQRModal"
                                 data-large-qr='{!! QrCode::size(500)->generate($qrlist->qr->qr_code) !!}'>
                                 {!! QrCode::size(200)->generate($qrlist->qr->qr_code) !!}
                             </a>
+                            @endif
                         </td>
                         <td>
                             {!! $qrlist->user && $qrlist->user->email ? $qrlist->user->email : '<span class="badge badge-success">Available</span>'!!}</td>

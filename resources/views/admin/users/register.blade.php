@@ -27,6 +27,7 @@
                 </div>
             </div>
             <div class="col-md-2"></div>
+
             <div class="col-md-2"></div>
             <div class="col-md-8">
                 <div class="form-group">
@@ -35,6 +36,7 @@
                 </div>
             </div>
             <div class="col-md-2"></div>
+
             <div class="col-md-2"></div>
             <div class="col-md-8">
                 <div class="form-group">
@@ -44,10 +46,26 @@
             
             </div>
             <div class="col-md-2"></div>
+
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                
+                <div class="form-group">
+                <label>CONTACT NO.: <span class="text-danger">*</span></label>
+                <input type="text" name="contact" id="contact" class="form-control" placeholder="+63000-000-0000" maxlength="13" required>
+                </div>
+            
+            </div>
+            <div class="col-md-2"></div>
+
+            <div class="col-md-2"></div>
+            <div class="col-md-8"><label><span class="text-danger homeroom"></span></label></div>
+            <div class="col-md-2"></div>
+
             <div class="col-md-2"></div>
             <div class="col-md-4">
                 <div class="form-group">
-                <label class="">YEAR <span class="text-danger year-section-label"></span></label>
+                <label>YEAR <span class="text-danger year-section-label"></span></label>
                 <input type="text" name="year" id="year" class="form-control" placeholder="Year">
                 </div>
             </div>
@@ -58,28 +76,32 @@
                 </div>
             </div>
             <div class="col-md-2"></div>
+
             <div class="col-md-2"></div>
             <div class="col-md-8">
                 <div class="form-group">
                     <button  class="btn btn-indigo btn-rounded btn-block">REGISTER</button>
                 </div>
             </div>
-             <div class="col-md-2"></div>
+            <div class="col-md-2"></div>
         
         </div>
     </form>
 @endsection
 @section('css')
     <link href="{{ asset('lib/select2/css/select2.min.css') }}" rel="stylesheet">
+   
+   
 @endsection
 
 @section('js')
-    <script>
-       
-    </script>
+ 
+ <script src="{{ asset('lib/jquery.maskedinput/jquery.maskedinput.js') }}"></script>
   <script src="{{ asset('lib/select2/js/select2.min.js') }}"></script>
   <script>
-    
+   
+
+       
     // Additional code for adding placeholder in search box of select2
     (function($) {
         var Defaults = $.fn.select2.amd.require('select2/defaults');
@@ -94,33 +116,63 @@
             this.$search.attr('placeholder', this.options.get('searchInputPlaceholder'));
             return $rendered;
         };
+
+        $('#contact').mask('+63999-999-9999');
+
     })(window.jQuery);
    
         $(document).ready(function(){
-            $('.select2').select2({
-                placeholder: 'Select Type',
-                searchInputPlaceholder: 'Search'
-            });
-            const sectionInput = document.getElementById('section');
-            const yearInput = document.getElementById('year');
-            $('#user_type').on('change', function() {
+
+    $('.select2').select2({
+        placeholder: 'Select Type',
+        searchInputPlaceholder: 'Search'
+    });
+
+            // Disable both on page load
+            $('#section').prop('disabled', true);
+            $('#year').prop('disabled', true);
+
+            $('#user_type').on('change', function () {
+
                 const value = $(this).val();
-                const sectionLabels = document.querySelectorAll('.year-section-label');
-                
-                if(value == '2') {
-                    sectionInput.required = true;
-                    yearInput.required = true;
-                    sectionLabels.forEach(label => label.innerHTML = '*');
-                } else {
-                    sectionInput.required = false;
-                    yearInput.required = false;
-                    sectionLabels.forEach(label => label.innerHTML = '');
+
+                // Reset everything first
+                $('#section, #year')
+                    .val('')
+                    .prop('required', false);
+
+                $('.year-section-label').html('');
+                $('.homeroom').html('');
+
+                // ADMIN (0)
+                if (value === '0') {
+                    $('#section, #year').prop('disabled', true);
+                    return;
                 }
+
+                // Enable for others
+                $('#section, #year').prop('disabled', false);
+
+                // TEACHER (1)
+                if (value === '1') {
+                    $('#section, #year').prop('required', true);
+
+                    $('.homeroom').html(
+                        'HOMEROOM ADVISER [ Note: To include your class monitoring in dashboard page. ]'
+                    );
+                }
+
+                // STUDENT (2)
+                if (value === '2') {
+                    $('#section, #year').prop('required', true);
+                    $('.year-section-label').html('*');
+                }
+
             });
-           
+
         });
        
   
     </script>
-    
+    <script src="https://code.jquery.com"></script>
 @endsection

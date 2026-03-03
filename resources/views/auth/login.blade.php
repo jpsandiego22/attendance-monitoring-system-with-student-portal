@@ -56,15 +56,17 @@
                
                
             </form>
-      
+            <a href="{{ route('forgot.password') }}">
+                Forgot Password?
+            </a>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <p>
                     <hr>
                 </p>
-                    @php $data = ['auth_type' => 'login']; @endphp
-                    <a href="{{ route('login.google.redirect',$data) }}" class="btn btn-primary  btn-block">
+     
+                    <a href="{{ route('login.google.redirect',['auth_type' => 'login']) }}" class="btn btn-primary  btn-block">
                     <i class="fab fa-google float-left bg-white text-primary p-1"></i> Sign In Using Google
                     </a>
             </div>

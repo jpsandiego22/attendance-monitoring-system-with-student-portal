@@ -2,6 +2,10 @@
 
 @section('title', 'Home')
 
+@section('css')
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+@endsection
 
 @section('content')
     <div class="row">
@@ -12,12 +16,13 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <table id="users-table" width="100%" class="table table-striped table-bordered table-responsive">
-                <thead>
+            <table id="users-table" width="100%" class="table table-striped table-bordered table-responsive w-100">
+                <thead class="thead-dark text-center">
                     <tr>
                         <th>ID</th>
-                        <th>Name</th>
                         <th>Identification</th>
+                        <th>Name</th>
+                        <th>Contact</th>
                         <th>User Type</th>
                         <th>Year</th>
                         <th>Section</th>
@@ -30,8 +35,9 @@
                     @foreach($users as $user)
                     <tr>
                         <td>{{ $user->id }}</td>
-                        <td>{{ $user->name }}</td>
                         <td>{{ $user->identification }}</td>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->contact }}</td>
                         <td>{{ $user->type->description}}</td>
                         <td>{{ $user->year ? $user->year : ''}}</td>
                         <td>{{ $user->section ? $user->section : ''}}</td>
@@ -45,11 +51,6 @@
                             @else
                                 <button class="btn btn-sm btn-danger">Unlocked</button>
                             @endif
-                            
-                            
-                            
-                                
-                                
                             </form>
                         </td>
                     </tr>
@@ -60,18 +61,7 @@
     </div>
 
 @endsection
-@section('css')
- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-<!-- DataTables CSS for Bootstrap 4 -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
-
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<!-- Bootstrap 4 JS -->
-
-@endsection
 
 @section('js')
     <script>
@@ -82,6 +72,11 @@
             "ordering": true,
             "responsive": true,
             "pageLength": 10,
+            autoWidth: true,
+             "columnDefs": [
+                { width: "20%", targets: 4,  className: "text-center" },
+                { width: "10%", targets: 6,  className: "text-center" }
+            ],
         });
     });
 </script>

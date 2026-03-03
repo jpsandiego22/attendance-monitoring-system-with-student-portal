@@ -126,6 +126,7 @@ class GoogleAuthController extends Controller
         elseif($userType == 'registration')
         {
             $regrem = json_decode($request->session()->get('regrem'),true);
+            
             $regrem[0]['email'] = $email;
 
             $validator = Validator::make($regrem[0], [

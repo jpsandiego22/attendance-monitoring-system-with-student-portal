@@ -24,7 +24,7 @@
     @include('partials.header')
 
     {{-- CONTENT --}}
-    <div  class="az-content-dashboard">
+    <div  class="az-content-dashboard mb-5">
         @include('partials.profile')
         @include('partials.change-password')
         
@@ -33,8 +33,7 @@
                 <div class="az-dashboard-one-title ">
                     <div>
                         <h2 class="az-dashboard-title">{{ $page_title }}</h2>
-                        <p class="az-dashboard-text">{{ $page_sub }}</p>
-                       
+                        <p class="az-dashboard-text">{!! $page_sub !!}</p>
                     </div>
                 </div>
                 @yield('message')
