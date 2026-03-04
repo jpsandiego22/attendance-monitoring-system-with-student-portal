@@ -25,8 +25,6 @@ class UserDetail extends Authenticatable
     protected $hidden = [
          'user_type'
     ];
-
-   
     public function user()
     {
         return $this->hasOne(User::class, 'user_detail_id');
@@ -47,5 +45,9 @@ class UserDetail extends Authenticatable
         }
         return $query->whereRaw('0 = 1');
        
+    }
+    public function log()
+    {
+        return $this->hasOne(DetailLogs::class, 'user_detail_id');
     }
 }

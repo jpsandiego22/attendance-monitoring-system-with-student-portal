@@ -21,12 +21,12 @@ class UserTypeSeeder extends Seeder
 
         UserType::create([
             'type' => 1,
-            'description' => 'FACULTY',
+            'description' => 'MANAGEMENT',
         ]);
 
         UserType::create([
             'type' => 2,
-            'description' => 'STUDENT',
+            'description' => 'USER',
         ]);
     }
 }

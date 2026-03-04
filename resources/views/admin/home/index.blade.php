@@ -58,95 +58,62 @@
                 </div>
             </a>
         </div>
-        <div class="col-md-12 border mt-3"  v-if="users.length"  v-cloak>
-            
-            <div class="alert alert-default alert-dismissible fade show" role="alert">
-                <h5 class="modal-title " v-html="selected"></h5>
-                <button @click="users=[]" type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span>&times;</span>
-                </button>
-                <hr>
-                
-                <!-- Table Responsive Wrapper -->
-                <div class="table-responsive">
-                    <table id="usersDashboard" width="100%" class="table table-striped table-bordered w-100">
-                        <thead class="thead-dark text-center">
-                            <tr>
-                                <th style="width:10%;">Identification</th>
-                                <th style="width:12%;">Photo</th>
-                                <th style="width:20%;">Name</th>
-                                <th style="width:8%;">Year</th>
-                                <th style="width:8%;">Section</th>
-                                <th style="width:15%;">User Type</th>
-                                <th style="width:15%;">Bind</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="user in users" :key="user.id">
-                                <td v-html="user.identification"></td>
-                                <td>
-                                    <img 
-                                        :src="user.img ? '/'+user.img : '/img/faces/face0.jpg'"
-                                        class="rounded-circle border shadow-sm"
-                                        width="80"
-                                        height="80"
-                                        style="object-fit: cover;">
-                                </td>
-                                <td v-html="user.name"></td>
-                                <td v-html="user.year"></td>
-                                <td v-html="user.section"></td>
-                                <td v-html="user.type_description"></td>
-                                <td v-html="user.user_email"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+        @component('admin.home.userComponent')
+            <h5 class="modal-title " v-html="selected"></h5>
+        @endcomponent
         <div class="col-md-12"><hr></div>
         <div class="col-lg-4">
-        <div class="card card-dashboard-pageviews">
-            <div class="card-header">
-            <h6 class="card-title">ATTENDANCE LOG</h6>
-            <p class="card-text">as of today.</p>
-            </div><!-- card-header -->
-            <div class="card-body">
-            <div class="az-list-item">
-                <div>
-                <h6>IN</h6>
-                <span>Total login today</span>
-                </div>
-                <div>
-                <h6 class="tx-primary">7,755</h6>
-                <span>31.74% (-100.00%)</span>
-                </div>
-            </div><!-- list-group-item -->
-            <div class="az-list-item">
-                <div>
-                <h6>Out</h6>
-                <span>Total logout today</span>
-                </div>
-                <div>
-                <h6 class="tx-primary">5,215</h6>
-                <span>28.53% (-100.00%)</span>
-                </div>
-            </div><!-- list-group-item -->
-            <div class="az-list-item">
-                <div>
-                <h6>New User</h6>
-                <span>New User today</span>
-                </div>
-                <div>
-                <h6 class="tx-primary">4,848</h6>
-                <span>25.35% (-100.00%)</span>
-                </div>
-            </div><!-- list-group-item -->
-            
-            </div><!-- card-body -->
-        </div><!-- card -->
+            <div class="card card-dashboard-pageviews">
+                <div class="card-header">
+                <h6 class="card-title">ATTENDANCE LOG</h6>
+                <p class="card-text">as of today.</p>
+                </div><!-- card-header -->
+                <div class="card-body">
+                <div class="az-list-item">
+                    <div>
+                    
+                        <h6><a href="#" @click="handleClicklogs('1')">IN</a> </h6>
+                    
+                        <span>Total login today</span>
+                   
+                    </div>
+                    <div>
+                        <h6 class="tx-primary">{{$t_login}}</h6>
+                        <span>{{$t_p_login}}</span>
+                    
+                    </div>
+                </div><!-- list-group-item -->
+                <div class="az-list-item">
+                    <div>
+                    <h6>Out</h6>
+                    <span>Total logout today</span>
+                    </div>
+                    <div>
+                        <h6 class="tx-primary">{{$t_logout}}</h6>
+                    <span>28.53% (-100.00%)</span>
+                    </div>
+                </div><!-- list-group-item -->
+                <div class="az-list-item">
+                    <div>
+                    <h6>New User</h6>
+                    <span>New User today</span>
+                    </div>
+                    <div>
+                    <h6 class="tx-primary">4,848</h6>
+                    <span>25.35% (-100.00%)</span>
+                    </div>
+                </div><!-- list-group-item -->
+                
+                </div><!-- card-body -->
+            </div><!-- card -->
         </div><!-- col -->
-        @include('admin.home.userModal')
-        <div id="admin-chatbot" style="
+        <div class="col-md-8">
+            @component('admin.home.userComponent')
+                <h5 class="modal-title " v-html="logselected"></h5>
+            @endcomponent
+        </div>
+
+        {{-- <div id="admin-chatbot" style="
     position:fixed;
     bottom:20px;
     right:20px;
@@ -165,8 +132,8 @@
     <div style="padding:10px;">
         <input type="text" id="chat-input" class="form-control" placeholder="Ask something...">
     </div>
-</div>
-    </div>
+</div>--}}
+    </div> 
 @endsection
 
 @section('js')
@@ -179,6 +146,7 @@
         data: {
             vtype: '',
             users: [],
+            logs: [],
         },
         methods: {
             handleClick(id) {
@@ -215,6 +183,41 @@
                     this.message = 'An error occurred while searching.';
                 });
             },
+            handleClicklogs(id) {
+                this.logs = [];  // clear the users array first
+                this.logselected = '';  // clear the users array first
+                this.tLogs(id);  // then fetch or filter users
+            },
+            tLogs(id) {
+                axios.post('{{ route('admin.getDataLogs') }}', { query: id })
+                .then(response => {
+                    this.logs = [];
+                    this.logselected = response.data.message.selected;
+                    console.log(response.data.message);
+                    this.logs = Array.isArray(response.data.message.data) ? response.data.message.data : [response.data.message.data];
+
+                    // Reinitialize DataTable
+                    this.$nextTick(() => {
+                        if ($.fn.dataTable.isDataTable('#usersDashboard')) {
+                            $('#usersDashboard').DataTable().destroy();
+                           
+                        }
+                        $('#usersDashboard').DataTable({
+                            paging: true,
+                            searching: true,
+                            ordering: true,
+                            responsive: true,
+                            pageLength: 10,
+                            autoWidth: false, // important to respect your custom column widths
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
+                    this.message = 'An error occurred while searching.';
+                });
+            },
+            
         }
     });
 

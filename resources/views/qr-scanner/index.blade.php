@@ -134,7 +134,8 @@
 <script src="{{ asset('lib/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('lib/ionicons/ionicons.js') }}"></script>
-<script src="https://unpkg.com/html5-qrcode"></script>
+<script src="{{ asset('js/html5-qrcode.js') }}"></script>
+
 <!-- Azia JS -->
 <script src="{{ asset('js/azia.js') }}"></script>
 <script src="{{ asset('js/qrscanner.js') }}"></script>

@@ -39,5 +39,14 @@ class UserType extends Authenticatable
         return $this->hasOne(User::class, 'type', 'user_type'); 
         // 'user_type' is the foreign key in user_account table
     }
-
+    public function getTypeLabelAttribute()
+    {
+        $types = [
+            0 => 'ADMINISTRATOR',
+            1 => 'MANAGEMENT',
+            2 => 'USER',
+        ];
+    
+        return $types[$this->type] ?? 'UNKNOWN';
+    }
 }

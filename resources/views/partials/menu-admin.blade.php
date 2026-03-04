@@ -3,29 +3,35 @@
     <div class="az-header-menu-header">
         <a href="{{route('admin.home')}}" class="az-logo"><span></span> portal</a>
         <a href="" class="close">&times;</a>
-    </div><!-- az-header-menu-header -->
+    </div>
     <ul class="nav">
         <li class="nav-item {{ Route::is('admin.home') ? 'active show' : '' }}">
             <a href="{{route('admin.home')}}" class="nav-link"><i class="typcn typcn-chart-area-outline"></i> Dashboard</a>
         </li>
+        <li class="nav-item">
+            <a href="form-elements.html" class="nav-link"><i class="typcn typcn-download-outline"></i> Announcement</a>
+        </li>
         <li class="nav-item {{ Route::is('user.*') ? 'active show' : '' }}">
             <a href="#" class="nav-link with-sub"><i class="typcn typcn-group"></i>Users </a>
             <nav class="az-menu-sub">
-                <a href="{{route('user.register')}}" class="nav-link">Create</a>
-                <a href="{{route('user.listview')}}" class="nav-link">List</a>
+                {{-- @component('component.adminComponent')
+                    <a href="{{route('user.type')}}" class="nav-link">User Type</a>
+                @endcomponent --}}
+               
+                <a href="{{route('user.register')}}" class="nav-link">Create User</a>
+                <a href="{{route('user.listview')}}" class="nav-link">Users List</a>
 
-                @if(Auth::user()->user_type == 0)
+                @component('component.ADC')
                     <a href="{{route('admin.userImport')}}" class="nav-link text-primary">Import *.CSV Template</a>
-                @endif
-
+                @endcomponent
             </nav>
         </li>
         <li class="nav-item {{ Route::is('admin.qr') ? 'active show' : '' }}">
             <a href="#" class="nav-link with-sub"><i class="typcn typcn-group"></i>QR </a>
             <nav class="az-menu-sub">
-                @if(Auth::user()->user_type == 0)
+                @component('component.ADC')
                     <a href="{{route('qr.scanner')}}" class="nav-link">Qr Scanner</a>
-                @endif
+                @endcomponent
             
             <a href="{{route('admin.qr')}}" class="nav-link">List</a>
             </nav>

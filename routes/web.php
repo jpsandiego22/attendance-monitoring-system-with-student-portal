@@ -9,8 +9,10 @@ use App\Http\Controllers\MasterController;
 use App\Http\Controllers\QrController;
 use App\Http\Controllers\QrScannerController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\UserTypeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+
 
 
 /*
@@ -34,8 +36,9 @@ function rolesForMiddleware(array $roles): string {
     return implode(',', $roles);
 }
 
+
 Route::get('/error', function () {
- 
+   
    return view('error');
 })->name('error');
 
@@ -67,20 +70,22 @@ Route::middleware(['auth', 'role:'.$pageAccess['admin']])->group(function () {
    Route::post('/qr/scan', [QrScannerController::class, 'scan_qr'])->name('qr.scan');
 });
 
-// ONLY ADMIN / FACULTY ROLE HAS ACCESS
-Route::middleware(['auth', 'role:'.rolesForMiddleware($pageAccess['admin-faculty'])])->group(function () {
+// ONLY ADMIN / MANAGEMENT ROLE HAS ACCESS
+Route::middleware(['auth', 'role:'.rolesForMiddleware($pageAccess['admin-management'])])->group(function () {
    Route::get('/admin/home', [HomeController::class, 'index'])->name('admin.home');
    Route::post('/admin/dataList', [HomeController::class, 'getDataList'])->name('admin.getDataList');
+   Route::post('/admin/dataLogs', [HomeController::class, 'getDataLogs'])->name('admin.getDataLogs');
    Route::get('/admin/users/registration', [UsersController::class, 'register'])->name('user.register');
    Route::post('/admin/users/registration', [UsersController::class, 'user_create'])->name('user.create');
    Route::get('/admin/users/list-show', [UsersController::class, 'list'])->name('user.listview');
+   // Route::get('/admin/users/user_type', [UserTypeController::class, 'index'])->name('user.type');
    Route::post('/admin/users/list-update/{id}', [UsersController::class, 'user_update'])->name('user.userUpdate');
    Route::get('/admin/qr', [QrController::class, 'index'])->name('admin.qr');
     
 });
 
 // ONLY STUDENT ROLE HAS ACCESS
-Route::middleware(['auth', 'role:2'.$pageAccess['student']])->group(function () {
+Route::middleware(['auth', 'role:2'.$pageAccess['user']])->group(function () {
    Route::get('/student/portal', [HomeController::class, 'studentindex'])->name('student.home');
 });
 

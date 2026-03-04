@@ -50,14 +50,29 @@ class HelperRepository
 
         return view('error',$responses);
     }
-    public function loginAccess($status, $class, $message)
+    function rolesForMiddleware(array $roles): string {
+        return implode(',', $roles);
+    }
+    public function dataAccess($status)
     {
-         return $responses = [
-            'status'=> $status,
-            'class'=> $class,
-            'message' => $message];
 
-        return view('error',$responses);
+        $pageAccess = config('ams.dataAccess');
+      
+        return $pageAccess[$status];
+
+        // $UserTypeId = Auth::user()->user_type;
+        // $userType  = UserType::query();
+        // if($UserTypeId !=0)
+        // {
+        //     $userType = $userType->whereNotIn('type', [0, 1]);
+        // }
+
+        //  return $responses = [
+        //     'status'=> $status,
+        //     'class'=> $class,
+        //     'message' => $message];
+
+        // return view('error',$responses);
     }
    
 }

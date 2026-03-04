@@ -95,9 +95,11 @@ class UsersController extends Controller
         $userSection = Auth::user()->detail->section;
         $userYear= Auth::user()->detail->year;
 
+        $dataAccess = HelperRepository::dataAccess($userType);
+
         $data = $userType === 0 
         ? UserDetail::with('type')->with('user')->get() 
-        : UserDetail::with('type')->whereNotIn('user_type', [0, 1])->where('section',$userSection)->where('year',$userYear)->with('user')->get();
+        : UserDetail::with('type')->whereIn('user_type', $dataAccess)->where('section',$userSection)->where('year',$userYear)->with('user')->get();
 
 
 

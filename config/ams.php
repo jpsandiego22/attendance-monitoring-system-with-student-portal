@@ -5,23 +5,19 @@
 return [
 
 // 0 = Administrator
-// 1 = Faculty
-// 2 = Student
+// 1 = Management
+// 2 = User
 'loginAccess' => [
         'admin' => 0,
-        'faculty' => 1,
-        'student' => 2,
+        'management' => 1,
+        'user' => 2,
         ],
 'pageAccess' => [
         'admin' => 0,
-        'faculty' => 1,
-        'student' => 2,
-        'admin-faculty' => [0,1],
+        'management' => 1,
+        'user' => 2,
+        'admin-management' => [0,1],
         'all' => [0,1,2]
         ],
-'dataAccess' => [
-        'admin' => [0,1,2],
-        'faculty' => [1,2],
-        'student' => [2],
-        ]
+'dataAccess' => [[0,1,2], [2],[2]]
 ];

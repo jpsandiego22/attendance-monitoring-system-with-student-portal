@@ -44,4 +44,9 @@ class DetailLogs extends Authenticatable
 
         return $query;
     }
+
+    public function log()
+    {
+        return $this->belongsTo(UserDetail::class, 'user_detail_id');
+    }
 }

@@ -6,9 +6,11 @@ use App\Models\UserType;
 use App\Models\UserDetail;
 use App\Models\User;
 use App\Models\UserQR;
+use App\Models\DetailLogs;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Support\HelperRepository;
 
 class HelperDashBoardRepository
 {
@@ -22,12 +24,15 @@ class HelperDashBoardRepository
         $userYear    = Auth::user()->detail->year;
 
 
+        $dataAccess = HelperRepository::dataAccess($userType);
 
         // Base queries
          
 
         $userDetailQuery  = UserDetail::query();
         $userAccountQuery = User::query();
+        $detailLogQuery = DetailLogs::query()
+        ->whereDate('created_at', now()->toDateString());
 
         // Apply filter if not Super Admin (0)
         if ($userType != 0) {
@@ -35,14 +40,23 @@ class HelperDashBoardRepository
             $userDetailQuery->where('section', $userSection)
                             ->where('year', $userYear)
                             ->where('id', '!=', $userDetailId)
-                            ->whereNotIn('user_type',[0,1]);
+                            ->whereIn('user_type',$dataAccess);
 
             $userAccountQuery->whereHas('detail', function ($q) use ($userSection, $userYear) {
                 $q->where('section', $userSection)
                 ->where('year', $userYear);
             })->where('id', '!=', $userId)
-            ->whereNotIn('user_type',[0,1]);
+            ->whereIn('user_type',$dataAccess);
+
+            $detailLogQuery->whereHas('log', function ($q) use ($userSection, $userYear) {
+                $q->where('section', $userSection)
+                ->where('year', $userYear);
+            })->where('id', '!=', $userId)
+            ->whereIn('user_type',$dataAccess);
         }
+
+        $t_login = (clone $detailLogQuery)
+        ->count();
 
         $data = [
             't_users'   => $userDetailQuery->count(),
@@ -60,28 +74,48 @@ class HelperDashBoardRepository
             't_locked'  => (clone $userDetailQuery)
                                 ->where('lock', 1)
                                 ->count(),
+
+            't_login'  => $t_login,
+
+            't_p_login'  => 'Users % ('. $this->percentage($userDetailQuery->count(), $t_login)."%)",
+
+            't_logout'  => (clone $detailLogQuery)
+                ->whereNull('t_out')
+                ->count(),
         ];
 
         
         return $data;
+    }
+    protected function percentage($val1, $val2)
+    {
+
+        $logoutPercentage = $val1 > 0 ? ($val2 / $val1) * 100 : 0;
+
+        // $logoutPercentage = round($logoutPercentage, 2);
+        $truncated = floor($logoutPercentage * 100) / 100; // 0.99
+        $formatted = number_format($truncated, 2, '.', ''); // "0.99"
+        return $formatted;
+        return number_format($logoutPercentage, 2, '.', '');;
     }
     public function getDataList($query)
     {
         $userDetailQuery  = UserDetail::query();
         // $userAccountQuery = User::query();
 
-
         $userId    = Auth::user()->detail->id;
         $userType    = Auth::user()->user_type;
         $userSection = Auth::user()->detail->section;
         $userYear    = Auth::user()->detail->year;
+
+        $dataAccess = HelperRepository::dataAccess($userType);
 
         if ($userType != 0) {
 
             $userDetailQuery->where('section', $userSection)
                             ->where('year', $userYear)
                             ->where('id', '!=', $userId)
-                            ->whereNotIn('user_type',[0,1]);
+                            ->whereIn('user_type',$dataAccess);
 
             // $userAccountQuery->whereHas('detail', function ($q) use ($userSection, $userYear) {
             //     $q->where('section', $userSection)
@@ -165,5 +199,8 @@ class HelperDashBoardRepository
                 return collect(); // return empty collection if invalid
         }
     }
-    
+    public function getDataLogs($query)
+    {
+
+    }
 }

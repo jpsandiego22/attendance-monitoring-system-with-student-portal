@@ -39,7 +39,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-  
+
         $page = $this->helper->page(
             'Hi, '. Auth::user()->detail->name,
             'Your web analytics dashboard view.');
@@ -80,6 +80,25 @@ class HomeController extends Controller
         return response()->json($responses);
 
     }
+    public function getDataLogs(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'query' => 'required|integer|between:1,3'
+        ]);
 
+        if ($validator->fails()) 
+        {
+            $errors = $validator->errors()->all();
+            $responses = $this->helper->handler('error','danger',implode('<br>', $errors));
+            return back()->with($responses);
+        }
+        $query = $request->input('query');
+
+        $data = $this->helperDashBoard->getDataLogs($query);
+       
+        $responses = $this->helper->handler('success','success', $data);
+
+        return response()->json($responses);
+    }
     
 }
